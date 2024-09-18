@@ -5,6 +5,8 @@ class TribeMember {
         this.name = name;
         this.age = Math.round(Math.random() * 100);
         this.health = Math.round(Math.random() * 100);
+        this.tools = [];
+        this.damage = 7;
     }
 
     getInfo() {
@@ -29,9 +31,23 @@ class TribeMember {
         const list = this.tools.map(({name, durability}) => `${name}, ${durability}`)
         console.log(`${this.name} имеет в багаже: ${list.join('; ')}`);
     }
-    
-}
+    attack(target) {
+        if(this.tools.length === 0) {
+            console(`${this.name} пошёл в рукопашную`);
+        } else {
+            console.log(`\n${this.name} атакует ${target.name} с помощью ${this.tools.at(0).name}`)
+        }
+        let tool = this.tools.at(0) || 0; // выбор предмета
+        let toolDamage = tool.damage;
 
+        if (tool.use()) {
+            let isKilled = target.takeDamage(this.damage + tool.damage);
+            if (isKilled) {
+                target = null;
+            }
+    }
+}
+}
 // дочерние классы
 class Apache extends TribeMember {
     constructor(name) {
@@ -115,7 +131,7 @@ const Vitaly = new Apache('Vitaly');
 const Valera = new Redneck('Valera');
 
 
-const Daniil = new TribeMember('Daniil');
+//const Daniil = new TribeMember('Daniil');
 //console.log(Vitaly)
 
 const motiga = new Tools('motiga');
@@ -123,5 +139,8 @@ const shovel = new Tools('shovel');
 Vitaly.addTool(motiga);
 Vitaly.addTool(shovel);
 
-//italy.getDescription();
-Vitaly.takeDamage();
+Vitaly.getDescription();
+
+const axe = new Weapon ('axe');
+Valera.addTool(axe);
+Vitaly.attack(Valera);
