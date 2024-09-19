@@ -88,6 +88,12 @@ class Redneck extends TribeMember {
     }
 }
 
+class Tomohavk extends Apache {
+    constructor(name){
+        super(name);
+        
+    }
+} 
 
 //Valera.getDescription();
 
@@ -127,6 +133,23 @@ class Tools extends Item {
     
 }
 
+class Pet {
+    constructor(name) {
+        this.health = Math.round(Math.random() * 50);
+        this.damage = 3;
+        takeDamage(damage) {
+            this.health -= damage;
+            console.log(`${this.name} получил ${damage} урона. Теперь его здоровье равно ${this.health}`);
+            if (this.health <= 0) {
+                console.log(`${this.name} убит`);
+                return true;
+            } else {
+                return false;
+            }}
+
+    }
+}
+
 const Vitaly = new Apache('Vitaly');
 const Valera = new Redneck('Valera');
 
@@ -144,3 +167,4 @@ Vitaly.getDescription();
 const axe = new Weapon ('axe');
 Valera.addTool(axe);
 Vitaly.attack(Valera);
+console.log(Valera);

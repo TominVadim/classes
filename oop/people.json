@@ -1,1 +1,19 @@
-{"alive": [], "dead": []}
+{
+  "alive": [
+    {
+      "name": "Valera",
+      "age": 22,
+      "health": 23,
+      "tools": [
+        {
+          "name": "axe",
+          "durability": 5,
+          "damage": 1
+        }
+      ],
+      "damage": 7,
+      "warSkill": 68
+    }
+  ],
+  "dead": []
+}
