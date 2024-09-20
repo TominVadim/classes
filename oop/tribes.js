@@ -33,15 +33,15 @@ class TribeMember {
     }
     attack(target) {
         if(this.tools.length === 0) {
-            console(`${this.name} пошёл в рукопашную`);
+            console.log(`${this.name} пошёл в рукопашную`);
         } else {
             console.log(`\n${this.name} атакует ${target.name} с помощью ${this.tools.at(0).name}`)
         }
         let tool = this.tools.at(0) || 0; // выбор предмета
         let toolDamage = tool.damage;
 
-        if (tool.use()) {
-            let isKilled = target.takeDamage(this.damage + tool.damage);
+        if (tool.use() ?? false) {
+            let isKilled = target.takeDamage(this.damage + toolDamage);
             if (isKilled) {
                 target = null;
             }
@@ -91,8 +91,23 @@ class Redneck extends TribeMember {
 class Tomohavk extends Apache {
     constructor(name){
         super(name);
-        
+        this.dog = [];
     }
+    addDog(dogName) {
+        this.dog.push(dogName);
+    }
+    useDog(target) {
+        this.dog.at(0).attack(target);
+
+    }
+    hasDog(target) {
+        if(this.tools.length === 0) {
+            console.log(`${this.name} выпускает собаку`);
+        this.useDog(target);
+    } else {
+        console.log(`${this.name} не доступна`);
+    }
+}
 } 
 
 //Valera.getDescription();
@@ -133,20 +148,28 @@ class Tools extends Item {
     
 }
 
-class Pet {
+class Dog {
     constructor(name) {
+        this.name = name;
         this.health = Math.round(Math.random() * 50);
-        this.damage = 3;
-        takeDamage(damage) {
-            this.health -= damage;
-            console.log(`${this.name} получил ${damage} урона. Теперь его здоровье равно ${this.health}`);
-            if (this.health <= 0) {
-                console.log(`${this.name} убит`);
-                return true;
-            } else {
-                return false;
-            }}
-
+        this.damage = 6; 
+    }
+    takeDamage(damage) {
+        this.health -= damage;
+        console.log(`${this.name} получил ${damage} урона. Теперь его здоровье равно ${this.health}`);
+        if (this.health <= 0) {
+            console.log(`${this.name} убит`);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    attack(target) {
+        console.log(`\n${this.name} атакует ${target.name}`);
+        let isKilled = target.takeDamage(this.damage);
+            if (isKilled) {
+                target = null;
+            }
     }
 }
 
@@ -168,3 +191,9 @@ const axe = new Weapon ('axe');
 Valera.addTool(axe);
 Vitaly.attack(Valera);
 console.log(Valera);
+const Ludmila = new Tomohavk('l');
+console.log(Ludmila);
+const Cerber = new Dog('Cerber');
+
+Ludmila.addDog(Cerber);
+Ludmila.attack(Valera);
