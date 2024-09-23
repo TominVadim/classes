@@ -12,15 +12,22 @@ const setPerson = (person) => {
     peopleList.alive.push(person);
     fs.writeFileSync(path, JSON.stringify(peopleList, null, 2));
 }
-// const addDeadPerson = ('/people.json') => {
-//     const path = getPath();
-//     const peopleList = JSON.parse(fs.readFileSync(path));
-//     const indexAlivePerson = peopleList.alive.map();
-//     const namePerson = person.name;
-//     const personObj= peopleList.alive.filter(({name}) => name === namePerson);
-//     const newArray = [...peopleList.alive.slice(0, indexAlivePerson - 1), ...peopleList.alive.slice(indexAllivePerson)];
-
-// }   
+const addDeadPerson = (person) => {
+    const path = getPath('/people.json');
+    const peopleList = JSON.parse(fs.readFileSync(path));
+   
+    //const indexAlivePerson = peopleList.alive.map();
+    const namePerson = person.name;
+    
+    const deadmanIndex= peopleList.alive.reduce((acc, {name},index) => {
+        return name === namePerson ? index : acc;
+    }, 0);
+    
+    peopleList.alive = peopleList.alive.filter(({name}, index) => index !== deadIndex);
+    fs.writeFileSync(path, JSON.stringify(peopleList, null, 2));
+}
+    
+   
 setPerson({
     name: 'Valera',
     age: 22,
