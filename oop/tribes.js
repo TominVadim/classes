@@ -53,6 +53,7 @@ class Apache extends TribeMember {
     constructor(name) {
         // обращаемся к конструктору TribeMember
         super(name);
+        this.className = 'apache';
         this.farmingSkill = 60 + Math.round(Math.random() * 40);
         if (this.health >= 40) {
             this.health = Math.round(Math.random() * 40)
@@ -74,6 +75,7 @@ class Redneck extends TribeMember {
     constructor(name) {
         //обращаемся к конструкутуру TribeMemeber
         super(name);
+        this.className = 'redneck';
         this.warSkill = 60 + Math.round(Math.random() * 40);
         if (this.health >= 60) {
             this.health = Math.round(Math.random() * 60);
@@ -91,6 +93,7 @@ class Redneck extends TribeMember {
 class Tomohavk extends Apache {
     constructor(name){
         super(name);
+        this.className = 'tomohavk';
         this.dog = [];
     }
     addDog(dogName) {
@@ -136,6 +139,7 @@ class Item {
 class Weapon extends Item {
     constructor(name) {
         super(name);
+        this.className = 'weapon';
         this.durability += 3;
         this.damage += Math.round(Math.random() * 5);
     }
@@ -144,6 +148,7 @@ class Weapon extends Item {
 class Tools extends Item {
     constructor(name) {
         super(name);
+        this.className = 'tools';
     }
     
 }
@@ -197,3 +202,5 @@ const Cerber = new Dog('Cerber');
 
 Ludmila.addDog(Cerber);
 Ludmila.attack(Valera);
+
+export { TribeMember, Apache, Redneck, Tomohavk, Item, Weapon, Dog, Tools };
